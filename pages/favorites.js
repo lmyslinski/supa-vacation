@@ -19,7 +19,13 @@ export async function getServerSideProps(context) {
 
   // Get all homes from the authenticated user
   const homes = await prisma.home.findMany({
-    where: { owner: { email: session.user.id } },
+    where: {
+      likedBy: {
+        some: {
+            userId: session.user.id,
+        },
+      },
+    },
     orderBy: { createdAt: "desc" },
   });
 
@@ -31,7 +37,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Homes = ({ homes = [] }) => {
+const Favorites = ({ homes = [] }) => {
   return (
     <Layout>
       <h1 className="text-xl font-medium text-gray-800">Your listings</h1>
@@ -45,4 +51,4 @@ const Homes = ({ homes = [] }) => {
   );
 };
 
-export default Homes;
+export default Favorites;

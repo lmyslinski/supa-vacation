@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 
 export async function getServerSideProps() {
 
-  const homes = await prisma.home.findMany();
+  const homes = await prisma.home.findMany()
 
   return {
     props: {
